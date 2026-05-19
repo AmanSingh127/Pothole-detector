@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RoadSentinel | National Road Monitoring System</title>
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="images/favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="64x64" href="images/favicon-64x64.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png">
+    <link rel="manifest" href="site.webmanifest"> 
+
+
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/home.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Roboto+Slab:wght@600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+</head>
+<body>
+    <!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <h2>RoadSentinel</h2>
+            <button class="close-btn" id="close-sidebar">&times;</button>
+        </div>
+        <ul class="sidebar-links">
+            <li><a href="index.html" class="active">Home</a></li>
+            <li><a href="live-detection.html">Live Detection</a></li>
+            <li><a href="recurrence-analysis.html">Recurrence Analysis</a></li>
+            <li><a href="priority-ranking.html">Priority Ranking</a></li>
+            <li><a href="methodology.html">Methodology</a></li>
+           
+        </ul>
+        <div class="sidebar-footer">
+            <p>National Infrastructure Monitoring</p>
+            <p>Municipal Corporation of India</p>
+        </div>
+    </div>
+
+    <div class="overlay" id="overlay"></div>
+
+    <div class="main-content-wrapper">
+        <header class="top-bar">
+            <button class="hamburger" id="hamburger">&#9776;</button>
+            <div class="title-mobile">RoadSentinel</div>
+            <div class="top-links">
+                <a href="feedback.html" class="top-link">Feedback</a>
+                <a href="about.html" class="top-link">About</a>
+            </div>
+        </header>
+
+        <div class="container">
+               <div class="kpi-container">
+                <div class="kpi-card">
+                    <div class="kpi-label">Active Damage Points</div>
+                    <div class="kpi-value" id="total-damage">-</div>
+                    <div class="kpi-trend">Real-time updates</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-label">High-Priority Roads</div>
+                    <div class="kpi-value" id="high-priority">-</div>
+                    <div class="kpi-trend">Severe damage zones</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-label">Recurring Zones</div>
+                    <div class="kpi-value" id="recurring">0</div>
+                    <div class="kpi-trend">≥3 repairs since 2020</div>
+                </div>
+                <div class="kpi-card">
+                    <div class="kpi-label">Monsoon-Vulnerable Roads</div>
+                    <div class="kpi-value" id="monsoon">32</div>
+                    <div class="kpi-trend">Hilly terrain zones</div>
+                </div>
+            </div>
+            </div>
+
+            <div class="main-layout">
+                <div class="info-panel">
+                    <h2>Road Monitoring</h2>
+                    <p>This predictive analytics platform monitors road surface conditions across <strong>Baddi's urban and industrial corridors</strong> to identify potholes and structural damage.</p>
+                    <p>Data sources include Baddi Municipal Council work orders, HP PWD logs, citizen reports, and IMD Solan weather station.</p>
+                </div>
+
+                <div class="map-container">
+                <div id="road-map"></div>
+    
+                <!-- Road Types Legend -->
+                <div class="legend-roads">
+                    <h4>Road Types</h4>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background:#C0392B"></div>
+                        <span>Highway</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background:#E67E22"></div>
+                        <span>Primary</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background:#27AE60"></div>
+                        <span>Secondary</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background:#2980B9"></div>
+                        <span>Tertiary</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color" style="background:#8E44AD"></div>
+                        <span>Residential</span>
+                    </div>
+                </div>
+                
+                <!-- Damage Severity Legend -->
+                <div class="    legend-damage">
+                    <h4>Damage Severity</h4>
+                    <div class="legend-item">
+                        <div class="legend-color legend-severe"></div>
+                        <span>Severe</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color legend-moderate"></div>
+                        <span>Moderate</span>
+                    </div>
+                    <div class="legend-item">
+                        <div class="legend-color legend-minor"></div>
+                        <span>Minor</span>
+                    </div>
+                </div>
+            </div>
+        <footer class="footer">
+            <p>RoadSentinel </p>
+        </footer>
+    </div>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+        <!-- <script src="script.js"></script> -->
+    <script src="https://www.gstatic.com/firebasejs/12.9.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/12.9.0/firebase-database-compat.js"></script>
+    <script src="js/firebase.js"></script>
+
+    <script src="js/data-loader.js"></script>
+    <script src="js/home.js"></script>
+    <script src="js/ui.js"></script>
+</body>
+</html>

@@ -1,0 +1,13 @@
+__pycache__/
+*.pyc
+.env
+venv/
+env/
+detections/
+runs/
+.DS_Store
+RDD2022_india/
+New pothole detection.v1i.yolov8/
+roboflow_pothole_clean/
+*.mp4
+*.avi

@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recurrence Analysis | RoadSentinel</title>
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="images/favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="64x64" href="images/favicon-64x64.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png">
+    <link rel="manifest" href="site.webmanifest">
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/recurrence.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Roboto+Slab:wght@600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+</head>
+<body>
+    <!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <h2>RoadSentinel</h2>
+            <button class="close-btn" id="close-sidebar">&times;</button>
+        </div>
+        <ul class="sidebar-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="live-detection.html">Live Detection</a></li>
+            <li><a href="recurrence-analysis.html" class="active">Recurrence Analysis</a></li>
+            <li><a href="priority-ranking.html">Priority Ranking</a></li>
+            <li><a href="methodology.html">Methodology</a></li>
+        </ul>
+        <div class="sidebar-footer">
+            <p>National Infrastructure Monitoring</p>
+            <p>Municipal Corporation of India</p>
+        </div>
+    </div>
+
+    <div class="overlay" id="overlay"></div>
+
+    <div class="main-content-wrapper">
+        <header class="top-bar">
+            <button class="hamburger" id="hamburger">&#9776;</button>
+            <div class="title-mobile">Recurrence Analysis</div>
+            <div class="top-links">
+                <a href="feedback.html" class="top-link">Feedback</a>
+                <a href="about.html" class="top-link">About</a>
+            </div>
+        </header>
+
+        <div class="container">
+            <div class="page-header">
+                <h1>Road Damage Recurrence Analysis – Baddi</h1>
+                <p class="subtitle">Identifying patterns of repeated failures in Baddi to enable permanent solutions.</p>
+            </div>
+
+            <!-- Key Metrics -->
+            <div class="metrics-grid">
+                <div class="metric-card">
+                    <div class="metric-value">12</div>
+                    <div class="metric-label">Recurring Zones</div>
+                    <div class="metric-desc">Road segments repaired ≥2 times since 2024</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value">74%</div>
+                    <div class="metric-label">Monsoon Correlation</div>
+                    <div class="metric-desc">Of recurring zones show seasonal pattern</div>
+                </div>
+                <div class="metric-card">
+                    <div class="metric-value">₹4.2 Cr</div>
+                    <div class="metric-label">Annual Waste</div>
+                    <div class="metric-desc">Estimated cost of temporary repairs in Baddi</div>
+                </div>
+            </div>
+
+            <!-- Root Cause Analysis -->
+            <section class="analysis-section">
+                <h2>Root Causes of Recurrence in Baddi</h2>
+                <div class="causes-grid">
+                    <div class="cause-card">
+                        <div class="cause-icon">🌧️</div>
+                        <h3>Monsoon Drainage Failure</h3>
+                        <p>Poor stormwater drainage along MHS Road causes sub-base erosion during heavy rains.</p>
+                    </div>
+                    <div class="cause-card">
+                        <div class="cause-icon">🚛</div>
+                        <h3>Industrial Heavy Traffic</h3>
+                        <p>Constant movement of overloaded trucks in Barotiwala industrial zone accelerates fatigue.</p>
+                    </div>
+                    <div class="cause-card">
+                        <div class="cause-icon">🏗️</div>
+                        <h3>Quick-Patch Repairs</h3>
+                        <p>Temporary cold-mix patches fail within 30–60 days due to lack of base stabilization.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Recurrence Map -->
+            <section class="analysis-section">
+                <h2>High-Recurrence Zones in Baddi (Last 24 Months)</h2>
+                <div class="map-container">
+                    <div id="recurrence-map"></div>
+                    <div class="legend">
+                        <h4>Recurrence Frequency</h4>
+                        <div class="legend-item">
+                            <div class="legend-color high-recurrence"></div>
+                            <span>≥4 repairs</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-color medium-recurrence"></div>
+                            <span>2–3 repairs</span>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Recommendations -->
+            <section class="analysis-section">
+                <h2>Recommended Interventions for Baddi</h2>
+                <div class="recommendations">
+                    <div class="recommendation-item">
+                        <div class="rec-icon">✅</div>
+                        <div>
+                            <h3>Full Reconstruction: MHS Road</h3>
+                            <p>Replace sub-base + install edge drains to prevent water ingress.</p>
+                        </div>
+                    </div>
+                    <div class="recommendation-item">
+                        <div class="rec-icon">⚖️</div>
+                        <div>
+                            <h3>Enforce Axle Load Limits</h3>
+                            <p>Deploy mobile weigh stations near Barotiwala industrial entry points.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <footer class="footer">
+            <p>Urban Infrastructure Monitoring System | Municipal Corporation of Baddi | Updated: <span id="update-time">Today</span></p>
+        </footer>
+    </div>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="js/config.js"></script>
+    <script src="script.js"></script>
+    <script>
+        if (document.getElementById('recurrence-map')) {
+            const recMap = L.map('recurrence-map').setView([30.9628, 76.8425], 14);
+            
+            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                attribution: '&copy; OpenStreetMap contributors'
+            }).addTo(recMap);
+            
+            // Baddi-specific recurrence zones
+            const recurrenceZones = [
+                { road: "MHS Road", lat: 30.9628, lng: 76.8425, frequency: 5 },
+                { road: "Barotiwala Industrial Link", lat: 30.9712, lng: 76.8510, frequency: 3 },
+                { road: "Nalagarh Road", lat: 30.9550, lng: 76.8300, frequency: 4 }
+            ];
+            
+            const getColor = (freq) => freq >= 4 ? '#C0392B' : '#E67E22';
+            
+            recurrenceZones.forEach(zone => {
+                const marker = L.circleMarker([zone.lat, zone.lng], {
+                    radius: 16,
+                    fillColor: getColor(zone.frequency),
+                    color: '#fff',
+                    weight: 2,
+                    opacity: 1,
+                    fillOpacity: 0.9
+                }).addTo(recMap);
+                
+                marker.bindPopup(`
+                    <strong>${zone.road}</strong><br>
+                    Repairs since 2024: ${zone.frequency}<br>
+                    Recommended: Permanent reconstruction
+                `);
+            });
+
+            document.getElementById('update-time').textContent = new Date().toLocaleDateString('en-IN', {
+                day: 'numeric',
+                month: 'short',
+                year: 'numeric'
+            });
+        }
+    </script>
+</body>
+</html>

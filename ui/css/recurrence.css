@@ -1,0 +1,147 @@
+/* ===== RECURRENCE ANALYSIS STYLES ===== */
+
+.page-header {
+    margin-bottom: 2rem;
+}
+
+.page-header h1 {
+    font-family: 'Roboto Slab', serif;
+    font-size: 1.8rem;
+    color: var(--primary-dark);
+    margin-bottom: 0.5rem;
+    font-weight: 700;
+}
+
+.subtitle {
+    color: #555;
+    font-size: 1.1rem;
+    max-width: 800px;
+}
+
+/* Metrics Grid */
+.metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+    margin-bottom: 2.5rem;
+}
+
+.metric-card {
+    background: var(--card-bg);
+    border-radius: 8px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    text-align: center;
+    border-top: 4px solid var(--primary-dark);
+}
+
+.metric-value {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--primary-dark);
+    margin-bottom: 0.3rem;
+}
+
+.metric-label {
+    font-weight: 600;
+    margin-bottom: 0.4rem;
+    color: var(--text-dark);
+}
+
+.metric-desc {
+    font-size: 0.95rem;
+    color: #555;
+}
+
+/* Analysis Sections */
+.analysis-section {
+    margin-bottom: 2.5rem;
+}
+
+.analysis-section h2 {
+    font-family: 'Roboto Slab', serif;
+    color: var(--primary-dark);
+    margin-bottom: 1.5rem;
+    font-size: 1.5rem;
+}
+
+/* Root Causes */
+.causes-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 1.5rem;
+}
+
+.cause-card {
+    background: var(--secondary-light);
+    border-radius: 8px;
+    padding: 1.5rem;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    border-left: 4px solid var(--accent-amber);
+}
+
+.cause-icon {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+}
+
+.cause-card h3 {
+    color: var(--primary-dark);
+    margin-bottom: 0.8rem;
+    font-size: 1.2rem;
+}
+
+/* Recurrence Map */
+#recurrence-map {
+    height: 100%;
+    width: 100%;
+    border: 1px solid var(--map-border);
+}
+
+.legend-color.high-recurrence { background-color: var(--severity-red); }
+.legend-color.medium-recurrence { background-color: var(--severity-orange); }
+.legend-color.low-recurrence { background-color: var(--severity-yellow); }
+
+/* Recommendations */
+.recommendations {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 1.5rem;
+}
+
+.recommendation-item {
+    display: flex;
+    gap: 1rem;
+    background: white;
+    padding: 1.5rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+    border-top: 3px solid var(--accent-amber);
+}
+
+.rec-icon {
+    font-size: 1.8rem;
+    flex-shrink: 0;
+}
+
+.recommendation-item h3 {
+    color: var(--primary-dark);
+    margin-bottom: 0.5rem;
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+    .page-header h1 {
+        font-size: 1.5rem;
+    }
+    
+    .metrics-grid,
+    .causes-grid,
+    .recommendations {
+        grid-template-columns: 1fr;
+    }
+    
+    .map-container {
+        height: 400px;
+    }
+}

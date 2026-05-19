@@ -1,0 +1,49 @@
+[
+  {
+    "lat": 30.9642,
+    "lng": 76.8451,
+    "severity": "severe",
+    "location": "NH105 near Baddi Bus Stand",
+    "timestamp": "2026-02-09T08:15:00Z"
+  },
+  {
+    "lat": 30.9725,
+    "lng": 76.8532,
+    "severity": "moderate",
+    "location": "Barotiwala Main Chowk",
+    "timestamp": "2026-02-09T09:30:00Z"
+  },
+
+  {
+    "lat": 30.9588,
+    "lng": 76.8367,
+    "severity": "severe",
+    "location": "Solan-Baddi Link Road",
+    "timestamp": "2026-02-09T10:45:00Z"
+  },
+     {
+    "lat": 30.9731,
+    "lng": 76.8545,
+    "severity": "severe",
+    "location": "Barotiwala Industrial Main Road",
+    "timestamp": "2026-02-10T10:05:00Z"
+  },
+
+  {
+    "lat": 30.9691,
+    "lng": 76.8489,
+    "severity": "minor",
+    "location": "Industrial Area Phase II",
+    "timestamp": "2026-02-09T11:20:00Z"
+  },
+    {
+    "lat": 30.9688,
+    "lng": 76.8495,
+    "severity": "severe",
+    "location": "Phase III Industrial Area",
+    "timestamp": "2026-02-10T12:15:00Z"
+  }
+
+  
+]
+

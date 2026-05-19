@@ -1,0 +1,6 @@
+# pothole_only.yaml
+train: C:/Users/AMAN SINGH/pothole_dataset/RDD2022_potholes_only/images
+val: C:/Users/AMAN SINGH/pothole_dataset/RDD2022_potholes_only/images
+
+nc: 1
+names: ['pothole']

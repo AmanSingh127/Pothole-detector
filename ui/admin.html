@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - Add Pothole</title>
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="images/favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="64x64" href="images/favicon-64x64.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png">
+    <link rel="manifest" href="site.webmanifest"> 
+</head>
+<body>
+    <div style="padding: 20px; max-width: 600px; margin: 0 auto;">
+        <h2>Add Test Pothole</h2>
+        <button onclick="addTestPothole()">Add NH105 Pothole</button>
+        <button onclick="addAnotherPothole()">Add Sai Road Pothole</button>
+        <p id="status"></p>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/12.9.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/12.9.0/firebase-database-compat.js"></script>
+    <script src="js/firebase.js"></script>
+
+    <script>
+        function addPothole(lat, lng, severity, location) {
+            const db = firebase.database();
+            const locationId = `${lat.toFixed(4)}_${lng.toFixed(4)}`;
+            
+            return db.ref('potholes').push().set({
+                lat: lat,
+                lng: lng,
+                severity: severity,
+                location: location,
+                locationId: locationId,
+                timestamp: firebase.database.ServerValue.TIMESTAMP
+            });
+        }
+
+        function addTestPothole() {
+            addPothole(30.9642, 76.8451, "severe", "NH105 near Bus Stand")
+                .then(() => {
+                    document.getElementById('status').textContent = "✅ NH105 pothole added!";
+                })
+                .catch(error => {
+                    document.getElementById('status').textContent = "❌ Error: " + error.message;
+                });
+        }
+
+        function addAnotherPothole() {
+            addPothole(30.9701, 76.8512, "moderate", "Sai Road Junction")
+                .then(() => {
+                    document.getElementById('status').textContent = "✅ Sai Road pothole added!";
+                })
+                .catch(error => {
+                    document.getElementById('status').textContent = "❌ Error: " + error.message;
+                });
+        }
+    </script>
+</body>
+</html>

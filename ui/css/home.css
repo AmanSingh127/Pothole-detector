@@ -1,0 +1,254 @@
+/* ===== HOME PAGE STYLES ===== */
+
+.kpi-container {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.kpi-card {
+    background: var(--card-bg);
+    border-radius: 8px;
+    padding: 1.5rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    border-top: 4px solid var(--primary-dark);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.kpi-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+}
+
+.kpi-value {
+    font-size: 2.2rem;
+    font-weight: 700;
+    margin: 0.5rem 0;
+    color: var(--primary-dark);
+}
+
+.kpi-label {
+    font-size: 1.1rem;
+    color: var(--text-dark);
+    font-weight: 500;
+}
+
+.kpi-trend {
+    font-size: 0.95rem;
+    color: #666;
+    margin-top: 0.3rem;
+}
+
+.main-layout {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    gap: 2rem;
+}
+
+.info-panel {
+    background: var(--card-bg);
+    padding: 1.8rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    height: fit-content;
+}
+
+.info-panel h2 {
+    font-family: 'Roboto Slab', serif;
+    font-size: 1.5rem;
+    margin-bottom: 1.2rem;
+    color: var(--primary-dark);
+    font-weight: 600;
+}
+
+.info-panel p {
+    margin-bottom: 1rem;
+    color: var(--text-dark);
+    font-size: 1.05rem;
+}
+
+.region-selector {
+    background-color: var(--secondary-light);
+    padding: 1rem;
+    border-radius: 6px;
+    margin: 1.2rem 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.8rem;
+    align-items: center;
+}
+
+.region-selector label {
+    font-weight: 600;
+    color: var(--primary-dark);
+    white-space: nowrap;
+}
+
+#region-select {
+    padding: 0.5rem 0.8rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background: white;
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    min-width: 180px;
+}
+
+.map-container {
+    background: var(--card-bg);
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    height: 600px;
+    position: relative;
+}
+
+#road-map {
+    height: 100%;
+    width: 100%;
+    border: 1px solid var(--map-border);
+}
+/* ==== PRIORITY RANKING TABLE ==== */
+/* Priority Ranking Table */
+.priority-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1.5rem 0;
+}
+
+.priority-table th,
+.priority-table td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #eee;
+}
+
+.priority-table th {
+    background-color: var(--card-bg);
+    font-weight: 600;
+    color: var(--primary-dark);
+}
+
+.severity {
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.severe { background: #FADBD8; color: #C0392B; }
+.moderate { background: #FDEBD0; color: #E67E22; }
+.minor { background: #F9E79F; color: #F1C40F; }
+
+.status {
+    padding: 4px 10px;
+    border-radius: 12px;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.pending { background: #FEF9E7; color: #F39C12; }
+.scheduled { background: #D5F5E3; color: #27AE60; }
+.in-progress { background: #EBDEF0; color: #8E44AD; }
+
+.no-data {
+    text-align: center;
+    padding: 2rem;
+    color: #777;
+}
+
+/* ===== MAP LEGENDS ===== */
+
+/* Road Types Legend (top-left) */
+.legend-roads {
+    background: rgba(255, 255, 255, 0.9);
+    padding: 12px;
+    border-radius: 4px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+    position: absolute;
+    top: 20px;
+    left: 20px;
+    z-index: 1000;
+    font-size: 13px;
+}
+
+/* Damage Severity Legend (bottom-right) */
+.legend-damage {
+    background: rgba(255, 255, 255, 0.9);
+    padding: 12px;
+    border-radius: 4px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+    z-index: 1000;
+    font-size: 13px;
+}
+
+/* Common legend styles */
+.legend-roads h4,
+.legend-damage h4 {
+    margin-bottom: 8px;
+    font-weight: 600;
+    color: var(--primary-dark);
+}
+
+.legend-roads .legend-item,
+.legend-damage .legend-item {
+    display: flex;
+    align-items: center;
+    margin: 4px 0;
+}
+
+.legend-roads .legend-color,
+.legend-damage .legend-color {
+    width: 20px;
+    height: 20px;
+    border-radius: 3px;
+    margin-right: 8px;
+}
+
+/* Keep your existing damage colors */
+.legend-severe { background-color: var(--severity-red); }
+.legend-moderate { background-color: var(--severity-orange); }
+.legend-minor { background-color: var(--severity-yellow); }
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+    .kpi-container {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+    
+    .kpi-card {
+        padding: 1.2rem;
+    }
+    
+    .kpi-value {
+        font-size: 1.8rem;
+    }
+    
+    .main-layout {
+        grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+    
+    .info-panel {
+        padding: 1.4rem;
+    }
+    
+    .map-container {
+        height: 400px;
+    }
+    
+    .region-selector {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .region-selector label {
+        align-self: flex-start;
+    }
+}
+

@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Feedback | RoadSentinel</title>
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="images/favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="64x64" href="images/favicon-64x64.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png">
+    <link rel="manifest" href="site.webmanifest"> 
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/feedback.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Roboto+Slab:wght@600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <h2>RoadSentinel</h2>
+            <button class="close-btn" id="close-sidebar">&times;</button>
+        </div>
+        <ul class="sidebar-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="live-detection.html">Live Detection</a></li>
+            <li><a href="recurrence-analysis.html">Recurrence Analysis</a></li>
+            <li><a href="priority-ranking.html">Priority Ranking</a></li>
+            <li><a href="methodology.html">Methodology</a></li>
+        </ul>
+        <div class="sidebar-footer">
+            <p>National Infrastructure Monitoring</p>
+            <p>Municipal Corporation of India</p>
+        </div>
+    </div>
+
+    <div class="overlay" id="overlay"></div>
+
+    <div class="main-content-wrapper">
+        <header class="top-bar">
+            <button class="hamburger" id="hamburger">&#9776;</button>
+            <div class="title-mobile">Feedback</div>
+            <div class="top-links">
+                <a href="feedback.html" class="top-link active">Feedback</a>
+                <a href="about.html" class="top-link">About</a>
+            </div>
+        </header>
+
+        <div class="container">
+            <div class="page-header">
+                <h1>Submit Feedback</h1>
+                <p class="subtitle">Help us improve road infrastructure monitoring across India. Your input directly shapes system enhancements.</p>
+            </div>
+
+            <div class="feedback-content">
+                <div class="feedback-info">
+                    <h2>Why Your Feedback Matters</h2>
+                    <p>As a stakeholder in India's urban infrastructure, your observations and suggestions help us:</p>
+                    <ul>
+                        <li>Improve damage detection accuracy</li>
+                        <li>Prioritize high-impact repairs</li>
+                        <li>Enhance data collection methods</li>
+                        <li>Refine predictive models</li>
+                    </ul>
+                    <p>All submissions are reviewed by the National Urban Transport Team within 5 working days.</p>
+                </div>
+
+                <div class="feedback-form">
+                    <form id="feedbackForm">
+                        <div class="form-group">
+                            <label for="name">Full Name *</label>
+                            <input type="text" id="name" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="email">Email Address *</label>
+                            <input type="email" id="email" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="organization">Organization (Optional)</label>
+                            <input type="text" id="organization">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="category">Feedback Category *</label>
+                            <select id="category" required>
+                                <option value="">Select category</option>
+                                <option value="data">Data Accuracy</option>
+                                <option value="ui">User Interface</option>
+                                <option value="feature">Feature Request</option>
+                                <option value="report">Damage Report</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="message">Your Feedback *</label>
+                            <textarea id="message" rows="5" required></textarea>
+                        </div>
+                        
+                        <button type="submit" class="submit-btn">Submit Feedback</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <footer class="footer">
+            <p>RoadSentinel | Updated: March 9, 2026</p>
+        </footer>
+    </div>
+    <script src="https://www.gstatic.com/firebasejs/12.9.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/12.9.0/firebase-database-compat.js"></script>
+    <script src="script.js"></script>
+    <script src="js/firebase.js"></script>
+    <script src="js/feedback.js"></script>
+</body>
+</html> 

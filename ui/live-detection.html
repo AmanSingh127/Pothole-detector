@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live Detection | RoadSentinel</title>
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="images/favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="64x64" href="images/favicon-64x64.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png">
+    <link rel="manifest" href="site.webmanifest"> 
+    <link rel="stylesheet" href="css/base.css?v=3">
+    <link rel="stylesheet" href="css/live-detection.css?v=3">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Roboto+Slab:wght@600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/@turf/turf@7/turf.min.js"></script>
+</head>
+<body>
+    <!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <h2>RoadSentinel</h2>
+            <button class="close-btn" id="close-sidebar">&times;</button>
+        </div>
+        <ul class="sidebar-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="live-detection.html" class="active">Live Detection</a></li>
+            <li><a href="recurrence-analysis.html">Recurrence Analysis</a></li>
+            <li><a href="priority-ranking.html">Priority Ranking</a></li>
+            <li><a href="methodology.html">Methodology</a></li>
+        </ul>
+        <div class="sidebar-footer">
+            <p>National Infrastructure Monitoring</p>
+            <p>Municipal Corporation of India</p>
+        </div>
+    </div>
+
+    <div class="overlay" id="overlay"></div>
+
+    <div class="main-content-wrapper">
+        <header class="top-bar">
+            <button class="hamburger" id="hamburger">&#9776;</button>
+            <div class="title-mobile">Live Detection</div>
+            <div class="top-links">
+            <a href="feedback.html" class="top-link">Feedback</a>
+            <a href="about.html" class="top-link">About</a>
+            </div>
+        </header>
+
+            <div class="container">
+        <div class="page-header">
+            <h1>Live Road Damage Detection</h1>
+            <p class="subtitle">Real-time monitoring of road surface damage in Baddi. Data updates automatically from AI detections.</p>
+        </div>  
+
+        <!-- Live Status Bar -->
+        <div class="status-bar">
+            <div class="status-indicator online">● System Online</div>
+            <div class="last-update">Last updated: <span id="update-time">Loading...</span></div>
+        </div>
+
+        <!-- Controls - Severity Only -->
+        <div class="controls">
+            <div class="filter-group">
+                <label>Severity:</label>
+                <div class="filter-buttons">
+                    <button class="filter-btn active" data-filter="all">All</button>
+                    <button class="filter-btn" data-filter="severe">Severe</button>
+                    <button class="filter-btn" data-filter="moderate">Moderate</button>
+                    <button class="filter-btn" data-filter="minor">Minor</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Main Layout -->
+        <div class="main-dashboard-layout">
+            <!-- Video Integration Panel -->
+            <div class="video-panel">
+                <div class="panel-header">
+                    <h2>Live Camera Feed</h2>
+                    <div class="header-badges">
+                        <span id="inference-status" class="status-badge offline">Offline</span>
+                        <span id="gps-status" class="status-badge offline">GPS: Acquiring...</span>
+                    </div>
+                </div>
+                <div class="camera-controls">
+                    <div class="input-group">
+                        <label for="ip-webcam-url">IP Webcam URL:</label>
+                        <input type="text" id="ip-webcam-url" placeholder="http://192.168.x.x:8080" value="http://192.168.1.10:8080">
+                    </div>
+                    <div class="input-group">
+                        <label for="model-api-url">Model API URL:</label>
+                        <input type="text" id="model-api-url" placeholder="http://localhost:5000/predict" value="http://127.0.0.1:5000/predict">
+                    </div>
+                    <div class="button-group">
+                        <button id="start-stream-btn" class="primary-btn">Start Detection</button>
+                        <button id="stop-stream-btn" class="secondary-btn" disabled>Stop</button>
+                    </div>
+                </div>
+                <div class="video-container" id="video-container">
+                    <div class="video-placeholder" id="video-placeholder">
+                        <span>📷</span>
+                        <p>Enter URLs and click Start to connect</p>
+                    </div>
+                    <!-- The image source will be updated continuously for MJPEG or snapshots -->
+                    <img id="camera-stream" crossorigin="anonymous" style="display: none;">
+                    <canvas id="detection-overlay" style="display: none;"></canvas>
+                </div>
+            </div>
+
+            <!-- Reports List Only (No Map) -->
+            <div class="reports-panel">
+                <div class="panel-header">
+                <h2>Recent Reports (<span id="report-count">0</span>)</h2>
+                <div class="header-actions">
+                    <button id="clear-btn" class="clear-btn">🗑️ Clear All</button>
+                    <button id="refresh-btn" class="refresh-btn">↻ Refresh</button>
+                </div>
+            </div>
+            <div class="reports-list" id="reports-list">
+                <!-- Reports populated by JS -->
+            </div>
+        </div>
+        </div>
+
+        <footer class="footer">
+            <p>Urban Infrastructure Monitoring System | Ministry of Housing and Urban Affairs, Govt. of India | Updated: January 23, 2026</p>
+        </footer>
+    </div>
+
+    <!-- Image Modal -->
+    <div id="image-modal" class="modal">
+        <span class="modal-close" id="modal-close">&times;</span>
+        <div class="modal-content-wrapper">
+            <img class="modal-content" id="modal-image">
+            <a id="modal-download" class="modal-download-btn" download="pothole_detection.jpg">Download Image</a>
+        </div>
+    </div>
+
+    <script src="https://www.gstatic.com/firebasejs/12.9.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/12.9.0/firebase-database-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/12.9.0/firebase-storage-compat.js"></script>
+    <script src="js/firebase.js"></script>
+
+    <script src="js/data-loader.js?v=7"></script>
+    <script src="js/live-detection.js?v=7"></script>
+    <script src="js/ui.js?v=7"></script>
+    <!-- TEMPORARY: Test Firebase Write (REMOVE AFTER TESTING) -->
+<!-- <script>
+function addTestPothole() {
+  const db = firebase.database();
+  const newPotholeRef = db.ref('potholes').push();
+  
+  newPotholeRef.set({
+    lat: 30.9642,
+    lng: 76.8451,
+    severity: "severe",
+    location: "NH105 near Bus Stand",
+    timestamp: firebase.database.ServerValue.TIMESTAMP
+  }).then(() => {
+    console.log("✅ Test pothole added successfully!");
+    alert("Test data added! Check Firebase Console.");
+  }).catch(error => {
+    console.error("❌ Firebase write failed:", error);
+    alert("Error: " + error.message);
+  });
+}
+
+// UNCOMMENT THE LINE BELOW TO RUN THE TEST
+addTestPothole();
+</script> -->
+</body>
+</html>

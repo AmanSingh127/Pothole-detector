@@ -1,0 +1,6 @@
+train: C:/Users/AMAN SINGH/pothole_dataset/images/train
+val: C:/Users/AMAN SINGH/pothole_dataset/images/val
+
+nc: 1
+names: ['pothole']
+

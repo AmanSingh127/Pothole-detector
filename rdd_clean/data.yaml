@@ -1,0 +1,6 @@
+# rdd2022_clean.yaml
+train: C:/Users/AMAN SINGH/pothole_dataset/rdd_clean/images
+val: C:/Users/AMAN SINGH/pothole_dataset/rdd_clean/images
+
+nc: 1
+names: ['pothole']

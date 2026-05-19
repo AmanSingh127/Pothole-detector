@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Priority Ranking | RoadSentinel</title>
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="images/favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="64x64" href="images/favicon-64x64.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png">
+    <link rel="manifest" href="site.webmanifest"> 
+
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/priority.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Roboto+Slab:wght@600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <h2>RoadSentinel</h2>
+            <button class="close-btn" id="close-sidebar">&times;</button>
+        </div>
+        <ul class="sidebar-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="live-detection.html">Live Detection</a></li>
+            <li><a href="recurrence-analysis.html">Recurrence Analysis</a></li>
+            <li><a href="priority-ranking.html" class="active">Priority Ranking</a></li>
+            <li><a href="methodology.html">Methodology</a></li>   
+        </ul>
+        <div class="sidebar-footer">
+            <p>National Infrastructure Monitoring</p>
+            <p>Municipal Corporation of India</p>
+        </div>
+    </div>
+
+    <div class="overlay" id="overlay"></div>
+
+    <div class="main-content-wrapper">
+        <header class="top-bar">
+            <button class="hamburger" id="hamburger">&#9776;</button>
+            <div class="title-mobile">Priority Ranking</div>
+            <div class="top-links">
+                <a href="feedback.html" class="top-link">Feedback</a>
+                <a href="about.html" class="top-link">About</a>
+            </div>
+        </header>
+
+        <div class="container">
+            <div class="page-header">
+                <h1>Baddi Road Maintenance Priority Ranking</h1>
+                <p class="subtitle">Top road segments in Baddi ranked by urgency.</p>
+            </div>
+
+            <div class="info-card">
+                <p><strong>Priority Score Formula:</strong> Combines structural damage (40%), traffic density (25%), recurrence probability (20%), and proximity to critical infrastructure (15%).</p>
+            </div>
+
+            <div class="table-container">
+                <table class="priority-table">
+                    <thead>
+                        <tr>
+                            <th>Rank</th>
+                            <th>Road Segment</th>
+                            <th>Location</th>
+                            <th>Severity</th>
+                            <th>Traffic</th>
+                            <th>Recurrence</th>
+                            <th>Score</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody id="priority-rows">
+                        <!-- Populated by JS -->
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="legend-section">
+                <h3>Legend</h3>
+                <div class="legend-items">
+                    <div class="legend-item">
+                        <span class="severity severe"></span> Severe Damage
+                    </div>
+                    <div class="legend-item">
+                        <span class="severity moderate"></span> Moderate Damage
+                    </div>
+                    <div class="legend-item">
+                        <span class="severity minor"></span> Minor Damage
+                    </div>
+                    <div class="legend-item">
+                        <span class="status pending"></span> Pending Repair
+                    </div>
+                    <div class="legend-item">
+                        <span class="status scheduled"></span> Scheduled
+                    </div>
+                    <div class="legend-item">
+                        <span class="status in-progress"></span> In Progress
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <footer class="footer">
+            <p>Urban Infrastructure Monitoring System | Municipal Corporation of Baddi | Updated: <span id="update-time">Today</span></p>
+        </footer>
+    </div>
+    <script src="https://www.gstatic.com/firebasejs/12.9.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/12.9.0/firebase-database-compat.js"></script>
+    <script src="js/firebase.js"></script>
+<script src="js/data-loader.js"></script>
+<script src="js/priority-ranking.js"></script>
+<script src="js/ui.js"></script>
+</body>
+</html>

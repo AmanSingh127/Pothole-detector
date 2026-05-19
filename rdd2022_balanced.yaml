@@ -1,0 +1,7 @@
+# Train from image lists to control negative sampling
+train: C:/Users/AMAN SINGH/pothole_dataset/balanced_splits/train.txt
+val: C:/Users/AMAN SINGH/pothole_dataset/balanced_splits/val.txt
+
+nc: 1
+names: ['pothole']
+

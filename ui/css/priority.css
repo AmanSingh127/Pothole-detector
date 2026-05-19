@@ -1,0 +1,155 @@
+/* ===== PRIORITY RANKING STYLES ===== */
+
+.page-header {
+    margin-bottom: 1.8rem;
+}
+
+.page-header h1 {
+    font-family: 'Roboto Slab', serif;
+    font-size: 1.8rem;
+    color: var(--primary-dark);
+    margin-bottom: 0.5rem;
+    font-weight: 700;
+}
+
+.subtitle {
+    color: #555;
+    font-size: 1.1rem;
+    max-width: 800px;
+}
+
+.info-card {
+    background-color: var(--secondary-light);
+    padding: 1.2rem;
+    border-radius: 8px;
+    margin-bottom: 2rem;
+    border-left: 4px solid var(--accent-amber);
+}
+
+.table-container {
+    overflow-x: auto;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    margin-bottom: 2rem;
+}
+
+.priority-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.95rem;
+}
+
+.priority-table th,
+.priority-table td {
+    padding: 1rem 0.8rem;
+    text-align: left;
+    border-bottom: 1px solid #eee;
+}
+
+.priority-table th {
+    background-color: var(--primary-dark);
+    color: white;
+    font-weight: 600;
+    position: sticky;
+    top: 0;
+}
+
+.priority-table tbody tr:hover {
+    background-color: rgba(245, 233, 215, 0.2);
+}
+
+.rank-badge {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    width: 28px;
+    height: 28px;
+    background: var(--accent-amber);
+    color: white;
+    border-radius: 50%;
+    font-weight: 700;
+    font-size: 0.9rem;
+}
+
+.severity {
+    padding: 0.25rem 0.6rem;
+    border-radius: 4px;
+    font-weight: 600;
+    font-size: 0.85rem;
+}
+
+.severity.severe {
+    background-color: rgba(192, 57, 43, 0.15);
+    color: var(--severity-red);
+}
+
+.severity.moderate {
+    background-color: rgba(230, 126, 34, 0.15);
+    color: var(--severity-orange);
+}
+
+.severity.minor {
+    background-color: rgba(241, 196, 15, 0.15);
+    color: var(--severity-yellow);
+}
+
+.score {
+    font-weight: 700;
+    color: var(--primary-dark);
+}
+
+.status {
+    padding: 0.25rem 0.6rem;
+    border-radius: 4px;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.status.pending {
+    background-color: rgba(231, 76, 60, 0.15);
+    color: #c0392b;
+}
+
+.status.scheduled {
+    background-color: rgba(52, 152, 219, 0.15);
+    color: #2980b9;
+}
+
+.status.in-progress {
+    background-color: rgba(46, 204, 113, 0.15);
+    color: #27ae60;
+}
+
+.legend-section {
+    margin-top: 2rem;
+}
+
+.legend-section h3 {
+    margin-bottom: 1rem;
+    color: var(--primary-dark);
+}
+
+.legend-items {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.95rem;
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+    .page-header h1 {
+        font-size: 1.5rem;
+    }
+    
+    .priority-table {
+        min-width: 600px;
+    }
+}

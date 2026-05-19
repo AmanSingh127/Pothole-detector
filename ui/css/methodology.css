@@ -1,0 +1,132 @@
+/* ===== METHODOLOGY PAGE STYLES ===== */
+
+.page-header {
+    margin-bottom: 1.8rem;
+}
+
+.page-header h1 {
+    font-family: 'Roboto Slab', serif;
+    font-size: 1.8rem;
+    color: var(--primary-dark);
+    margin-bottom: 0.5rem;
+    font-weight: 700;
+}
+
+.subtitle {
+    color: #555;
+    font-size: 1.1rem;
+    max-width: 800px;
+}
+
+.methodology-sections {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.methodology-card {
+    background: var(--card-bg);
+    border-radius: 8px;
+    padding: 1.8rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+.methodology-card h2 {
+    font-family: 'Roboto Slab', serif;
+    color: var(--primary-dark);
+    margin-bottom: 1.2rem;
+    font-size: 1.4rem;
+}
+
+.methodology-card p {
+    margin-bottom: 1rem;
+    line-height: 1.7;
+}
+
+.data-sources li {
+    margin-bottom: 0.8rem;
+    padding-left: 1.2rem;
+    position: relative;
+}
+
+.data-sources li::before {
+    content: '•';
+    color: var(--accent-amber);
+    font-weight: bold;
+    position: absolute;
+    left: 0;
+    top: 0;
+}
+
+.model-diagram {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    margin-top: 1rem;
+}
+
+.model-step {
+    display: flex;
+    gap: 1.2rem;
+    align-items: flex-start;
+}
+
+.step-number {
+    background: var(--primary-dark);
+    color: white;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
+    flex-shrink: 0;
+    margin-top: 4px;
+}
+
+.step-content h3 {
+    margin-bottom: 0.5rem;
+    color: var(--primary-dark);
+    font-size: 1.1rem;
+}
+
+.validation-metrics {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.2rem;
+    margin-top: 1rem;
+}
+
+.metric-card {
+    background: var(--secondary-light);
+    padding: 1.2rem;
+    border-radius: 8px;
+    text-align: center;
+    border-left: 3px solid var(--accent-amber);
+}
+
+.metric-value {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--primary-dark);
+    margin-bottom: 0.3rem;
+}
+
+.metric-label {
+    font-weight: 600;
+    margin-bottom: 0.4rem;
+    color: var(--text-dark);
+}
+
+/* Mobile */
+@media (max-width: 768px) {
+    .model-step {
+        flex-direction: column;
+        gap: 0.8rem;
+    }
+    
+    .validation-metrics {
+        grid-template-columns: 1fr;
+    }
+}

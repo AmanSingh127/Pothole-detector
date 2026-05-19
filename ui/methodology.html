@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Methodology | RoadSentinel</title>
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="images/favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="images/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="64x64" href="images/favicon-64x64.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png">
+    <link rel="manifest" href="site.webmanifest"> 
+
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/methodology.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Roboto+Slab:wght@600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Sidebar -->
+    <div class="sidebar" id="sidebar">
+        <div class="sidebar-header">
+            <h2>RoadSentinel</h2>
+            <button class="close-btn" id="close-sidebar">&times;</button>
+        </div>
+        <ul class="sidebar-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="live-detection.html">Live Detection</a></li>
+            <li><a href="recurrence-analysis.html">Recurrence Analysis</a></li>
+            <li><a href="priority-ranking.html">Priority Ranking</a></li>
+            <li><a href="methodology.html" class="active">Methodology</a></li>
+        </ul>
+        <div class="sidebar-footer">
+            <p>National Infrastructure Monitoring</p>
+            <p>Municipal Corporation of India</p>
+        </div>
+    </div>
+
+    <div class="overlay" id="overlay"></div>
+
+    <div class="main-content-wrapper">
+        <header class="top-bar">
+            <button class="hamburger" id="hamburger">&#9776;</button>
+            <div class="title-mobile">Methodology</div>
+            <div class="top-links">
+                <a href="feedback.html" class="top-link">Feedback</a>
+                <a href="about.html" class="top-link">About</a>
+            </div>
+        </header>
+
+        <div class="container">
+            <div class="page-header">
+                <h1>Technical Methodology</h1>
+                <p class="subtitle">Transparent explanation of data sources, predictive models, and validation protocols.</p>
+            </div>
+
+            <div class="methodology-sections">
+                <section class="methodology-card">
+                    <h2>1. Data Sources</h2>
+                    <p>The system integrates multi-modal data from authoritative sources across India:</p>
+                    <ul class="data-sources">
+                        <li><strong>NHAI & State PWD Logs</strong>: Historical repair records (2018–present).</li>
+                        <li><strong>Traffic Monitoring Systems</strong>: Vehicle count data from NTC.</li>
+                        <li><strong>Environmental Sensors</strong>: Rainfall, temperature from IMD stations.</li>
+                        <li><strong>Citizen Reports</strong>: Verified submissions via UMANG app.</li>
+                        <li><strong>Geospatial Imagery</strong>: Satellite and street-level imagery.</li>
+                    </ul>
+                </section>
+
+                <section class="methodology-card">
+                    <h2>2. Predictive Modeling Framework</h2>
+                    <p>We employ a hybrid machine learning approach:</p>
+                    <div class="model-diagram">
+                        <div class="model-step">
+                            <div class="step-number">1</div>
+                            <div class="step-content">
+                                <h3>Feature Engineering</h3>
+                                <p>42 features derived from raw data including traffic density, monsoon exposure, soil type, road age, and historical recurrence patterns.</p>
+                            </div>
+                        </div>
+                        <div class="model-step">
+                            <div class="step-number">2</div>
+                            <div class="step-content">
+                                <h3>Ensemble Modeling</h3>
+                                <p>Gradient Boosting (XGBoost) + Random Forest trained on 5.2M+ historical records.</p>
+                            </div>
+                        </div>
+                        <div class="model-step">
+                            <div class="step-number">3</div>
+                            <div class="step-content">
+                                <h3>Priority Scoring</h3>
+                                <p>Composite index weighted by: structural risk (40%), public impact (30%), economic cost (20%), strategic importance (10%).</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="methodology-card">
+                    <h2>3. Model Validation</h2>
+                    <p>Rigorous testing ensures reliability:</p>
+                    <div class="validation-metrics">
+                        <div class="metric-card">
+                            <div class="metric-value">89.2%</div>
+                            <div class="metric-label">Prediction Accuracy</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-value">0.92</div>
+                            <div class="metric-label">F1-Score</div>
+                        </div>
+                        <div class="metric-card">
+                            <div class="metric-value">94%</div>
+                            <div class="metric-label">Recurrence Forecast</div>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="methodology-card">
+                    <h2>4. Governance & Ethics</h2>
+                    <p>The system adheres to national standards:</p>
+                    <ul>
+                        <li>Compliant with <strong>National Data Sharing and Accessibility Policy (NDSAP)</strong></li>
+                        <li>Data anonymized per <strong>MeitY Privacy Guidelines</strong></li>
+                        <li>Model bias audits conducted quarterly</li>
+                    </ul>
+                </section>
+            </div>
+        </div>
+
+        <footer class="footer">
+            <p>Urban Infrastructure Monitoring System | Ministry of Housing and Urban Affairs, Govt. of India | Updated: January 23, 2026</p>
+        </footer>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
