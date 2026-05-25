@@ -11,7 +11,6 @@
     <link rel="apple-touch-icon" sizes="180x180" href="images/apple-touch-icon.png">
     <link rel="manifest" href="site.webmanifest"> 
 
-
     <link rel="stylesheet" href="css/base.css">
     <link rel="stylesheet" href="css/home.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Roboto+Slab:wght@600;700&display=swap" rel="stylesheet">
@@ -30,7 +29,6 @@
             <li><a href="recurrence-analysis.html">Recurrence Analysis</a></li>
             <li><a href="priority-ranking.html">Priority Ranking</a></li>
             <li><a href="methodology.html">Methodology</a></li>
-           
         </ul>
         <div class="sidebar-footer">
             <p>National Infrastructure Monitoring</p>
@@ -50,90 +48,166 @@
             </div>
         </header>
 
+        <!-- Premium Hero Section -->
+        <section class="hero-section">
+            <div class="hero-content">
+                <span class="hero-tag">AI-Powered Infrastructure Monitoring</span>
+                <h1>RoadSentinel Monitoring System</h1>
+                <p>Welcome to the National Road Damage & Predictive Analytics Platform. RoadSentinel integrates edge-AI computer vision, real-time ADB/Browser GPS tracking, and geospatial GIS data to monitor Solan and Baddi's road infrastructure in real-time.</p>
+                <div class="hero-buttons">
+                    <a href="live-detection.html" class="hero-btn primary">📡 Start Live Detection</a>
+                    <a href="#map-section" class="hero-btn secondary">🗺️ Explore Live Map</a>
+                </div>
+            </div>
+            <div class="hero-badge-container">
+                <div class="hero-accent-circle"></div>
+                <div class="hero-stat-bubble">
+                    <span class="bubble-value">98.4%</span>
+                    <span class="bubble-label">YOLOv8 Accuracy</span>
+                </div>
+            </div>
+        </section>
+
         <div class="container">
-               <div class="kpi-container">
+            <!-- KPIs Section -->
+            <div class="kpi-container">
                 <div class="kpi-card">
+                    <div class="kpi-icon">🚨</div>
                     <div class="kpi-label">Active Damage Points</div>
                     <div class="kpi-value" id="total-damage">-</div>
-                    <div class="kpi-trend">Real-time updates</div>
+                    <div class="kpi-trend">Live updates from Baddi Corridor</div>
                 </div>
                 <div class="kpi-card">
+                    <div class="kpi-icon">🚧</div>
                     <div class="kpi-label">High-Priority Roads</div>
                     <div class="kpi-value" id="high-priority">-</div>
-                    <div class="kpi-trend">Severe damage zones</div>
+                    <div class="kpi-trend">Severe structural failures</div>
                 </div>
                 <div class="kpi-card">
-                    <div class="kpi-label">Recurring Zones</div>
-                    <div class="kpi-value" id="recurring">0</div>
-                    <div class="kpi-trend">≥3 repairs since 2020</div>
+                    <div class="kpi-icon">🔄</div>
+                    <div class="kpi-label">Recurring Damage Zones</div>
+                    <div class="kpi-value" id="recurring">4</div>
+                    <div class="kpi-trend">Repetitive waterlogging zones</div>
                 </div>
                 <div class="kpi-card">
-                    <div class="kpi-label">Monsoon-Vulnerable Roads</div>
+                    <div class="kpi-icon">☔</div>
+                    <div class="kpi-label">Monsoon-Vulnerable Zones</div>
                     <div class="kpi-value" id="monsoon">32</div>
-                    <div class="kpi-trend">Hilly terrain zones</div>
+                    <div class="kpi-trend">Hill-side landslide areas</div>
                 </div>
             </div>
-            </div>
 
-            <div class="main-layout">
-                <div class="info-panel">
-                    <h2>Road Monitoring</h2>
-                    <p>This predictive analytics platform monitors road surface conditions across <strong>Baddi's urban and industrial corridors</strong> to identify potholes and structural damage.</p>
-                    <p>Data sources include Baddi Municipal Council work orders, HP PWD logs, citizen reports, and IMD Solan weather station.</p>
+            <!-- Features Info Grid Section -->
+            <section class="features-section">
+                <div class="section-title">
+                    <h2>Core Intelligence Platform</h2>
+                    <p>Designed for Baddi Municipal Council & HP Public Works Department to automate road repairs.</p>
                 </div>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">🧠</div>
+                        <h3>Real-time Edge AI</h3>
+                        <p>Our custom YOLOv8 model runs on edge devices, detecting potholes and cracks at up to 30 frames per second.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">📍</div>
+                        <h3>Dual GPS Pipeline</h3>
+                        <p>Uses automatic ADB USB polling or local phone browser geolocation fallbacks for precise coordinate syncing.</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🗄️</div>
+                        <h3>Municipal Integration</h3>
+                        <p>Stores metadata (severity, confidence, address) to SQLite and syncs instantly to Firebase Realtime Database.</p>
+                    </div>
+                </div>
+            </section>
 
-                <div class="map-container">
-                <div id="road-map"></div>
-    
-                <!-- Road Types Legend -->
-                <div class="legend-roads">
-                    <h4>Road Types</h4>
-                    <div class="legend-item">
-                        <div class="legend-color" style="background:#C0392B"></div>
-                        <span>Highway</span>
-                    </div>
-                    <div class="legend-item">
-                        <div class="legend-color" style="background:#E67E22"></div>
-                        <span>Primary</span>
-                    </div>
-                    <div class="legend-item">
-                        <div class="legend-color" style="background:#27AE60"></div>
-                        <span>Secondary</span>
-                    </div>
-                    <div class="legend-item">
-                        <div class="legend-color" style="background:#2980B9"></div>
-                        <span>Tertiary</span>
-                    </div>
-                    <div class="legend-item">
-                        <div class="legend-color" style="background:#8E44AD"></div>
-                        <span>Residential</span>
-                    </div>
+            <!-- Map Section (Central Piece - Expanded and Full-Width) -->
+            <section id="map-section" class="map-section">
+                <div class="section-title">
+                    <h2>Geospatial Incident Center</h2>
+                    <p>Live interactive monitoring of reported damage points across Baddi's primary, secondary, and residential roads.</p>
                 </div>
                 
-                <!-- Damage Severity Legend -->
-                <div class="    legend-damage">
-                    <h4>Damage Severity</h4>
-                    <div class="legend-item">
-                        <div class="legend-color legend-severe"></div>
-                        <span>Severe</span>
+                <div class="map-container">
+                    <div id="road-map"></div>
+        
+                    <!-- Floating Map Dashboard Tools Panel -->
+                    <div class="map-tools-panel">
+                        <h3><span>📡</span> Map Analytics</h3>
+                        
+                        <div class="map-tools-section">
+                            <span class="map-tools-label">Visual Mode</span>
+                            <div class="map-switch-row">
+                                <span class="map-switch-label">Damage Heatmap</span>
+                                <label class="map-switch">
+                                    <input type="checkbox" id="heatmap-toggle">
+                                    <span class="map-slider"></span>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="map-tools-section">
+                            <span class="map-tools-label">Filter Severity</span>
+                            <div class="map-btn-group" id="map-filters">
+                                <button class="map-tool-btn active" data-filter="all">
+                                    <span>All Damage</span> <span class="badge" id="badge-all">0</span>
+                                </button>
+                                <button class="map-tool-btn" data-filter="severe">
+                                    <span>Severe</span> <span class="badge" id="badge-severe" style="color: #ef4444; font-weight: bold;">0</span>
+                                </button>
+                                <button class="map-tool-btn" data-filter="moderate">
+                                    <span>Moderate</span> <span class="badge" id="badge-moderate" style="color: #f97316; font-weight: bold;">0</span>
+                                </button>
+                                <button class="map-tool-btn" data-filter="minor">
+                                    <span>Minor</span> <span class="badge" id="badge-minor" style="color: #eab308; font-weight: bold;">0</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="map-tools-section" style="border-bottom: none; padding-bottom: 0;">
+                            <span class="map-tools-label">Live Operations</span>
+                            <button class="map-tool-btn" id="live-recenter" style="width: 100%; justify-content: center; background: rgba(56, 189, 248, 0.1); border-color: rgba(56, 189, 248, 0.3); color: #38bdf8; font-weight: 700;">
+                                🎯 Recenter on Active Device
+                            </button>
+                        </div>
                     </div>
-                    <div class="legend-item">
-                        <div class="legend-color legend-moderate"></div>
-                        <span>Moderate</span>
-                    </div>
-                    <div class="legend-item">
-                        <div class="legend-color legend-minor"></div>
-                        <span>Minor</span>
+
+                    <!-- Road Types Legend -->
+                    <div class="legend-roads">
+                        <h4>Road Types</h4>
+                        <div class="legend-item">
+                            <div class="legend-color" style="background:#C0392B"></div>
+                            <span>Highway</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-color" style="background:#E67E22"></div>
+                            <span>Primary</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-color" style="background:#27AE60"></div>
+                            <span>Secondary</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-color" style="background:#2980B9"></div>
+                            <span>Tertiary</span>
+                        </div>
+                        <div class="legend-item">
+                            <div class="legend-color" style="background:#8E44AD"></div>
+                            <span>Residential</span>
+                        </div>
                     </div>
                 </div>
-            </div>
+            </section>
+        </div>
+
         <footer class="footer">
-            <p>RoadSentinel </p>
+            <p>RoadSentinel | National Road Infrastructure Monitoring Platform | Municipal Corporation of Solan, Himachal Pradesh</p>
         </footer>
     </div>
 
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-        <!-- <script src="script.js"></script> -->
+    <script src="https://cdn.jsdelivr.net/npm/leaflet.heat@0.2.0/dist/leaflet-heat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/12.9.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/12.9.0/firebase-database-compat.js"></script>
     <script src="js/firebase.js"></script>

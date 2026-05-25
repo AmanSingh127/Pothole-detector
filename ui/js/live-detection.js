@@ -348,6 +348,14 @@ document.addEventListener('DOMContentLoaded', () => {
                 const formData = new FormData();
                 formData.append('image', blob, 'frame.jpg');
 
+                // Add coordinates and location details for server sync
+                const lat = currentGPS.lat || 30.9628;
+                const lng = currentGPS.lng || 76.8425;
+                const location = currentLocationName || (currentGPS.lat ? `${currentGPS.lat.toFixed(4)}, ${currentGPS.lng.toFixed(4)}` : "Baddi Corridor (Simulated GPS)");
+                formData.append('lat', lat);
+                formData.append('lng', lng);
+                formData.append('location', location);
+
                 // Tell server to save image when ready to push to Firebase
                 const now = Date.now();
                 const readyToSave = (now - lastFirebasePush >= 2000);
@@ -355,6 +363,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
                 const response = await fetch(fetchUrl, {
                     method: 'POST',
+                    headers: {
+                        'x-api-key': 'rs_api_key_8d9f10a7b4c2d3e4f5'
+                    },
                     body: formData
                 });
 
@@ -442,17 +453,11 @@ document.addEventListener('DOMContentLoaded', () => {
         });
 
         if (worstSeverity && typeof firebase !== 'undefined') {
-            // Do not save until GPS is locked
-            if (!currentGPS.lat || currentGPS.lat === 0) {
-                console.warn("Detection skipped: Waiting for GPS lock...");
-                return;
-            }
-
             lastFirebasePush = now;
             
-            const lat = currentGPS.lat;
-            const lng = currentGPS.lng;
-            const location = currentLocationName || `${lat.toFixed(4)}, ${lng.toFixed(4)}`;
+            const lat = currentGPS.lat || 30.9628;
+            const lng = currentGPS.lng || 76.8425;
+            const location = currentLocationName || (currentGPS.lat ? `${lat.toFixed(4)}, ${lng.toFixed(4)}` : "Baddi Corridor (Simulated GPS)");
 
             try {
                 // 1. Upload to Firebase Storage

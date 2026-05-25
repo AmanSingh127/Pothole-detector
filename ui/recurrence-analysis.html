@@ -49,86 +49,110 @@
 
         <div class="container">
             <div class="page-header">
-                <h1>Road Damage Recurrence Analysis – Baddi</h1>
-                <p class="subtitle">Identifying patterns of repeated failures in Baddi to enable permanent solutions.</p>
+                <h1>Road Damage Recurrence Analysis</h1>
+                <p class="subtitle">Identifying patterns of repeated failures in Baddi to enable permanent engineering solutions.</p>
             </div>
 
             <!-- Key Metrics -->
             <div class="metrics-grid">
                 <div class="metric-card">
-                    <div class="metric-value">12</div>
+                    <div class="metric-value" id="metric-recurring-zones">0</div>
                     <div class="metric-label">Recurring Zones</div>
-                    <div class="metric-desc">Road segments repaired ≥2 times since 2024</div>
+                    <div class="metric-desc">Locations with repeated damage detections (≥2 times)</div>
                 </div>
                 <div class="metric-card">
-                    <div class="metric-value">74%</div>
+                    <div class="metric-value" id="metric-monsoon-correlation">0%</div>
                     <div class="metric-label">Monsoon Correlation</div>
-                    <div class="metric-desc">Of recurring zones show seasonal pattern</div>
+                    <div class="metric-desc">Of damage reports registered during rainy season (Jun-Sep)</div>
                 </div>
                 <div class="metric-card">
-                    <div class="metric-value">₹4.2 Cr</div>
-                    <div class="metric-label">Annual Waste</div>
-                    <div class="metric-desc">Estimated cost of temporary repairs in Baddi</div>
+                    <div class="metric-value" id="metric-annual-waste">₹0</div>
+                    <div class="metric-label">Estimated Loss</div>
+                    <div class="metric-desc">Calculated waste from repeating temporary cold-mix patches</div>
                 </div>
             </div>
 
-            <!-- Root Cause Analysis -->
-            <section class="analysis-section">
-                <h2>Root Causes of Recurrence in Baddi</h2>
-                <div class="causes-grid">
-                    <div class="cause-card">
-                        <div class="cause-icon">🌧️</div>
-                        <h3>Monsoon Drainage Failure</h3>
-                        <p>Poor stormwater drainage along MHS Road causes sub-base erosion during heavy rains.</p>
+            <!-- Main Dashboard Layout -->
+            <div class="dashboard-grid">
+                <!-- Left: Live Map Card -->
+                <div class="map-card">
+                    <div class="card-header">
+                        <h2>High-Recurrence Zones (Baddi Heatmap)</h2>
                     </div>
-                    <div class="cause-card">
-                        <div class="cause-icon">🚛</div>
-                        <h3>Industrial Heavy Traffic</h3>
-                        <p>Constant movement of overloaded trucks in Barotiwala industrial zone accelerates fatigue.</p>
-                    </div>
-                    <div class="cause-card">
-                        <div class="cause-icon">🏗️</div>
-                        <h3>Quick-Patch Repairs</h3>
-                        <p>Temporary cold-mix patches fail within 30–60 days due to lack of base stabilization.</p>
-                    </div>
-                </div>
-            </section>
-
-            <!-- Recurrence Map -->
-            <section class="analysis-section">
-                <h2>High-Recurrence Zones in Baddi (Last 24 Months)</h2>
-                <div class="map-container">
-                    <div id="recurrence-map"></div>
-                    <div class="legend">
-                        <h4>Recurrence Frequency</h4>
-                        <div class="legend-item">
-                            <div class="legend-color high-recurrence"></div>
-                            <span>≥4 repairs</span>
-                        </div>
-                        <div class="legend-item">
-                            <div class="legend-color medium-recurrence"></div>
-                            <span>2–3 repairs</span>
+                    <div class="map-wrapper">
+                        <div id="recurrence-map"></div>
+                        <div class="legend">
+                            <h4>Recurrence</h4>
+                            <div class="legend-item">
+                                <div class="legend-color high-recurrence"></div>
+                                <span>≥4 times (Critical)</span>
+                            </div>
+                            <div class="legend-item">
+                                <div class="legend-color medium-recurrence"></div>
+                                <span>2-3 times (Moderate)</span>
+                            </div>
+                            <div class="legend-item">
+                                <div class="legend-color low-recurrence"></div>
+                                <span>1 time (New)</span>
+                            </div>
                         </div>
                     </div>
                 </div>
-            </section>
 
-            <!-- Recommendations -->
-            <section class="analysis-section">
-                <h2>Recommended Interventions for Baddi</h2>
-                <div class="recommendations">
+                <!-- Right: Top Hotspots List -->
+                <div class="hotspots-card">
+                    <div class="card-header">
+                        <h2>Top Hotspots</h2>
+                    </div>
+                    <div class="hotspots-list" id="hotspots-list-container">
+                        <div class="no-hotspots">Waiting for database sync...</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Live Actions & Searchable Table -->
+            <div class="table-card">
+                <div class="table-header-row">
+                    <h2>Infrastructure Intervention Plan</h2>
+                    <input type="text" id="recurrence-search" class="search-box" placeholder="🔍 Search road name or coordinates...">
+                </div>
+                <div class="table-responsive">
+                    <table class="custom-table">
+                        <thead>
+                            <tr>
+                                <th>Road Segment / Location</th>
+                                <th>Coordinates</th>
+                                <th>Peak Severity</th>
+                                <th>Detections</th>
+                                <th>Last Seen</th>
+                                <th>Action Plan</th>
+                            </tr>
+                        </thead>
+                        <tbody id="recurrence-table-body">
+                            <tr>
+                                <td colspan="6" style="text-align: center; color: #777;">Loading live database reports...</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Recommended Engineering Solutions -->
+            <section class="analysis-section" style="margin-top: 1rem;">
+                <h2 style="font-family: 'Roboto Slab', serif; color: var(--primary-dark); font-size: 1.4rem; margin-bottom: 1.2rem;">Engineering Intervention Framework</h2>
+                <div class="recommendations" id="recommendations-container" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.2rem;">
                     <div class="recommendation-item">
-                        <div class="rec-icon">✅</div>
+                        <div class="rec-icon">🏗️</div>
                         <div>
-                            <h3>Full Reconstruction: MHS Road</h3>
-                            <p>Replace sub-base + install edge drains to prevent water ingress.</p>
+                            <h3>Full Subgrade Reconstruction</h3>
+                            <p>For critical zones (≥4 detections). Replace underlying sub-base with soil stabilization, geogrid reinforcement, and overlay concrete pavers or polymer asphalt.</p>
                         </div>
                     </div>
                     <div class="recommendation-item">
-                        <div class="rec-icon">⚖️</div>
+                        <div class="rec-icon">🌧️</div>
                         <div>
-                            <h3>Enforce Axle Load Limits</h3>
-                            <p>Deploy mobile weigh stations near Barotiwala industrial entry points.</p>
+                            <h3>Drainage & Sub-drain Retrofits</h3>
+                            <p>For moderate zones (2-3 detections). Water logged sub-bases are the primary driver of failure. Implement trench edge drains and slot drainage channels.</p>
                         </div>
                     </div>
                 </div>
@@ -140,49 +164,333 @@
         </footer>
     </div>
 
+    <!-- Firebase SDK & Config -->
+    <script src="https://www.gstatic.com/firebasejs/12.9.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/12.9.0/firebase-database-compat.js"></script>
+    <script src="js/firebase.js"></script>
+    <script src="js/data-loader.js"></script>
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-    <script src="js/config.js"></script>
     <script src="script.js"></script>
     <script>
-        if (document.getElementById('recurrence-map')) {
-            const recMap = L.map('recurrence-map').setView([30.9628, 76.8425], 14);
-            
-            L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        document.addEventListener('DOMContentLoaded', () => {
+            if (!document.getElementById('recurrence-map')) return;
+
+            // Define base map layers
+            const streetMap = L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
                 attribution: '&copy; OpenStreetMap contributors'
-            }).addTo(recMap);
-            
-            // Baddi-specific recurrence zones
-            const recurrenceZones = [
-                { road: "MHS Road", lat: 30.9628, lng: 76.8425, frequency: 5 },
-                { road: "Barotiwala Industrial Link", lat: 30.9712, lng: 76.8510, frequency: 3 },
-                { road: "Nalagarh Road", lat: 30.9550, lng: 76.8300, frequency: 4 }
-            ];
-            
-            const getColor = (freq) => freq >= 4 ? '#C0392B' : '#E67E22';
-            
-            recurrenceZones.forEach(zone => {
-                const marker = L.circleMarker([zone.lat, zone.lng], {
-                    radius: 16,
-                    fillColor: getColor(zone.frequency),
-                    color: '#fff',
-                    weight: 2,
-                    opacity: 1,
-                    fillOpacity: 0.9
-                }).addTo(recMap);
-                
-                marker.bindPopup(`
-                    <strong>${zone.road}</strong><br>
-                    Repairs since 2024: ${zone.frequency}<br>
-                    Recommended: Permanent reconstruction
-                `);
             });
 
-            document.getElementById('update-time').textContent = new Date().toLocaleDateString('en-IN', {
-                day: 'numeric',
-                month: 'short',
-                year: 'numeric'
+            const darkMatter = L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+                attribution: '&copy; OpenStreetMap contributors &copy; CARTO'
             });
-        }
+
+            const satellite = L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}', {
+                attribution: 'Tiles &copy; Esri &mdash; Source: Esri, USDA, USGS'
+            });
+
+            // Initialize Leaflet map, defaulting to bright streetMap
+            const recMap = L.map('recurrence-map', {
+                center: [30.9628, 76.8425],
+                zoom: 13.5,
+                layers: [streetMap]
+            });
+
+            // Add layer selector controls
+            const baseMaps = {
+                "Street Map": streetMap,
+                "Dark Mode": darkMatter,
+                "Satellite": satellite
+            };
+            L.control.layers(baseMaps, null, { collapsed: false, position: 'bottomleft' }).addTo(recMap);
+
+            const markerLayerGroup = L.layerGroup().addTo(recMap);
+            let cachedPotholes = [];
+
+            // Search Filter Handler
+            const searchInput = document.getElementById('recurrence-search');
+            searchInput.addEventListener('keyup', () => {
+                filterAndRenderTable(cachedPotholes);
+            });
+
+            // ─── Haversine Distance (meters) between two GPS points ──────────────
+            function haversineDistance(lat1, lng1, lat2, lng2) {
+                const R = 6371000; // Earth radius in meters
+                const toRad = deg => deg * Math.PI / 180;
+                const dLat = toRad(lat2 - lat1);
+                const dLng = toRad(lng2 - lng1);
+                const a = Math.sin(dLat / 2) ** 2 +
+                          Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) * Math.sin(dLng / 2) ** 2;
+                return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+            }
+
+            // Group raw potholes into unified "Recurrence Zones" within 30 meters on the fly
+            function groupPotholesIntoZones(rawPotholes) {
+                const zones = [];
+                const DEDUP_THRESHOLD_METERS = 30;
+
+                rawPotholes.forEach(p => {
+                    const lat = parseFloat(p.lat || 0);
+                    const lng = parseFloat(p.lng || 0);
+                    if (!lat || !lng) return;
+
+                    // Try to find an existing zone close to this pothole
+                    let matchedZone = null;
+                    let closestDist = Infinity;
+                    for (const zone of zones) {
+                        const dist = haversineDistance(lat, lng, zone.lat, zone.lng);
+                        if (dist < DEDUP_THRESHOLD_METERS && dist < closestDist) {
+                            matchedZone = zone;
+                            closestDist = dist;
+                        }
+                    }
+
+                    const frequencyVal = parseInt(p.frequency || 1);
+
+                    if (matchedZone) {
+                        // Merge with existing zone
+                        matchedZone.frequency += frequencyVal;
+                        
+                        // Keep the latest timestamp
+                        const currentTs = p.timestamp ? new Date(p.timestamp).getTime() : 0;
+                        const zoneTs = matchedZone.timestamp ? new Date(matchedZone.timestamp).getTime() : 0;
+                        if (currentTs > zoneTs) {
+                            matchedZone.timestamp = p.timestamp;
+                        }
+
+                        // Keep the highest severity (severe > moderate > minor)
+                        const severityRank = { 'minor': 1, 'moderate': 2, 'severe': 3 };
+                        const pRank = severityRank[p.severity] || 1;
+                        const zoneRank = severityRank[matchedZone.severity] || 1;
+                        if (pRank > zoneRank) {
+                            matchedZone.severity = p.severity;
+                        }
+                    } else {
+                        // Create a new zone
+                        zones.push({
+                            id: p.id || Math.random().toString(36).substring(2),
+                            lat: lat,
+                            lng: lng,
+                            severity: p.severity || 'minor',
+                            frequency: frequencyVal,
+                            location: p.location || `${lat.toFixed(4)}, ${lng.toFixed(4)}`,
+                            timestamp: p.timestamp
+                        });
+                    }
+                });
+
+                return zones;
+            }
+
+            // Fetch and display dynamic data in real-time
+            listenToPotholes((rawPotholes) => {
+                // Group raw reports by coordinate proximity on the fly
+                const potholes = groupPotholesIntoZones(rawPotholes);
+                cachedPotholes = potholes;
+                markerLayerGroup.clearLayers();
+
+                // 1. Calculate Metrics
+                const recurringPotholes = potholes.filter(p => p.frequency >= 2);
+                const recurringCount = recurringPotholes.length;
+
+                // Update Recurring Zones Count
+                document.getElementById('metric-recurring-zones').textContent = recurringCount;
+
+                // Calculate Monsoon Correlation (June - September)
+                let monsoonDetections = 0;
+                potholes.forEach(p => {
+                    if (p.timestamp) {
+                        const date = new Date(p.timestamp);
+                        const month = date.getMonth(); // 0-indexed: Jun=5, Jul=6, Aug=7, Sep=8
+                        if (month >= 5 && month <= 8) {
+                            monsoonDetections += (p.frequency || 1);
+                        }
+                    }
+                });
+                const totalDetectionsCount = potholes.reduce((sum, p) => sum + (p.frequency || 1), 0);
+                const monsoonPercent = totalDetectionsCount > 0 
+                    ? Math.round((monsoonDetections / totalDetectionsCount) * 100) 
+                    : 0;
+                document.getElementById('metric-monsoon-correlation').textContent = `${monsoonPercent}%`;
+
+                // Calculate Estimated Repair Costs (₹35,000 per patch attempt)
+                const costPerRepair = 35000;
+                const totalCost = totalDetectionsCount * costPerRepair;
+                
+                let costText = `₹0`;
+                if (totalCost >= 10000000) { // >= 1 Crore
+                    costText = `₹${(totalCost / 10000000).toFixed(2)} Cr`;
+                } else if (totalCost >= 100000) { // >= 1 Lakh
+                    costText = `₹${(totalCost / 100000).toFixed(2)} Lakh`;
+                } else {
+                    costText = `₹${totalCost.toLocaleString('en-IN')}`;
+                }
+                document.getElementById('metric-annual-waste').textContent = costText;
+
+                // 2. Render dynamic map markers
+                const getMarkerColor = (freq) => {
+                    if (freq >= 4) return '#C0392B'; // Dark Red (Critical)
+                    if (freq >= 2) return '#E67E22'; // Orange (Moderate)
+                    return '#F1C40F'; // Yellow (New/Minor)
+                };
+
+                const getMarkerRadius = (freq) => {
+                    if (freq >= 4) return 15;
+                    if (freq >= 2) return 10;
+                    return 5.5;
+                };
+
+                potholes.forEach(p => {
+                    const lat = parseFloat(p.lat || 0);
+                    const lng = parseFloat(p.lng || 0);
+                    if (!lat || !lng) return;
+
+                    const freq = p.frequency || 1;
+                    const dateStr = p.timestamp ? new Date(p.timestamp).toLocaleString('en-IN') : 'Unknown';
+
+                    const color = getMarkerColor(freq);
+                    const radius = getMarkerRadius(freq);
+                    const opacity = freq >= 2 ? 0.95 : 0.6;
+
+                    const marker = L.circleMarker([lat, lng], {
+                        radius: radius,
+                        fillColor: color,
+                        color: '#ffffff',
+                        weight: 1.5,
+                        opacity: opacity,
+                        fillOpacity: opacity,
+                        className: freq >= 2 ? 'pulse-marker' : ''
+                    }).addTo(markerLayerGroup);
+
+                    let recommendationText = "Standard Patching & Sealant";
+                    if (freq >= 4) {
+                        recommendationText = "Base Reconstruction Required";
+                    } else if (freq >= 2) {
+                        recommendationText = "Subgrade Drainage Restoration";
+                    }
+
+                    marker.bindPopup(`
+                        <div style="font-family: 'Inter', sans-serif; color: #0f172a; padding: 2px;">
+                            <strong style="font-size: 0.9rem; color: #4a3a2a;">📍 ${p.location || 'Baddi Surface Damage'}</strong><br>
+                            <span style="display:inline-block; margin: 4px 0; padding: 2px 6px; background: rgba(0,0,0,0.05); border-radius: 4px; font-size: 0.75rem;">
+                                🔁 Recurrence: <strong>${freq}x detections</strong>
+                            </span><br>
+                            <span style="font-size: 0.8rem; color: #475569;">
+                                <strong>Last Detected:</strong> ${dateStr}<br>
+                                <strong>Engineering Action:</strong> ${recommendationText}
+                            </span>
+                        </div>
+                    `);
+                });
+
+                // 3. Render Top Hotspots panel with Progress bars
+                renderTopHotspotsList(potholes);
+
+                // 4. Render Table with filters
+                filterAndRenderTable(potholes);
+
+                // Update update time
+                document.getElementById('update-time').textContent = new Date().toLocaleDateString('en-IN', {
+                    day: 'numeric',
+                    month: 'short',
+                    year: 'numeric',
+                    hour: '2-digit',
+                    minute: '2-digit'
+                });
+            });
+
+            function renderTopHotspotsList(potholes) {
+                const hotspotsContainer = document.getElementById('hotspots-list-container');
+                if (!hotspotsContainer) return;
+
+                // Sort potholes by frequency desc
+                const sorted = [...potholes]
+                    .sort((a, b) => (b.frequency || 1) - (a.frequency || 1))
+                    .slice(0, 5); // top 5
+
+                if (sorted.length === 0) {
+                    hotspotsContainer.innerHTML = '<div class="no-hotspots">No damage records found in database</div>';
+                    return;
+                }
+
+                const maxFreq = Math.max(...potholes.map(p => p.frequency || 1), 1);
+
+                hotspotsContainer.innerHTML = sorted.map(p => {
+                    const freq = p.frequency || 1;
+                    const percent = Math.min((freq / maxFreq) * 100, 100);
+                    const severityClass = freq >= 4 ? 'high' : freq >= 2 ? 'medium' : 'low';
+                    const dateStr = p.timestamp ? new Date(p.timestamp).toLocaleDateString('en-IN') : 'Unknown';
+                    const mainLocation = p.location.split(',')[0] || 'Unknown Road';
+
+                    return `
+                        <div class="hotspot-item">
+                            <div class="hotspot-info">
+                                <div class="hotspot-name" title="${p.location}">${mainLocation}</div>
+                                <div class="hotspot-freq ${severityClass}">${freq} Detections</div>
+                            </div>
+                            <div class="gauge-bar-bg">
+                                <div class="gauge-bar-fill ${severityClass}" style="width: ${percent}%;"></div>
+                            </div>
+                            <div class="hotspot-meta">
+                                <span>📍 ${p.lat.toFixed(4)}, ${p.lng.toFixed(4)}</span>
+                                <span>Latest: ${dateStr}</span>
+                            </div>
+                        </div>
+                    `;
+                }).join('');
+            }
+
+            function filterAndRenderTable(potholes) {
+                const tbody = document.getElementById('recurrence-table-body');
+                if (!tbody) return;
+
+                const query = searchInput.value.toLowerCase().trim();
+
+                // Sort all potholes so recurring ones are first, then by frequency
+                const sorted = [...potholes].sort((a, b) => (b.frequency || 1) - (a.frequency || 1));
+
+                // Filter based on query
+                const filtered = sorted.filter(p => {
+                    const loc = (p.location || '').toLowerCase();
+                    const latLng = `${p.lat.toFixed(4)}, ${p.lng.toFixed(4)}`;
+                    return loc.includes(query) || latLng.includes(query);
+                });
+
+                if (filtered.length === 0) {
+                    tbody.innerHTML = `<tr><td colspan="6" style="text-align: center; color: #777; padding: 2rem;">No matching recurrence zones found</td></tr>`;
+                    return;
+                }
+
+                tbody.innerHTML = filtered.map(p => {
+                    const freq = p.frequency || 1;
+                    const dateStr = p.timestamp ? new Date(p.timestamp).toLocaleString('en-IN', {
+                        day: 'numeric',
+                        month: 'short',
+                        hour: '2-digit',
+                        minute: '2-digit'
+                    }) : 'Unknown';
+
+                    let actionBadge = '';
+                    if (freq >= 4) {
+                        actionBadge = `<span class="action-badge reconstruct">🏗️ Reconstruct Base</span>`;
+                    } else if (freq >= 2) {
+                        actionBadge = `<span class="action-badge drainage">🌧️ Drainage Repair</span>`;
+                    } else {
+                        actionBadge = `<span class="action-badge patch">🔧 Patch & Seal</span>`;
+                    }
+
+                    return `
+                        <tr>
+                            <td style="font-weight: 650; color: var(--primary-dark);">${p.location || 'Unnamed Road Segment'}</td>
+                            <td style="font-family: monospace; font-size: 0.85rem;">${p.lat.toFixed(5)}, ${p.lng.toFixed(5)}</td>
+                            <td><span class="severity-badge ${p.severity}">${p.severity}</span></td>
+                            <td style="font-weight: bold; color: #C0392B;">${freq}x</td>
+                            <td style="font-size: 0.85rem; color: #666;">${dateStr}</td>
+                            <td>${actionBadge}</td>
+                        </tr>
+                    `;
+                }).join('');
+            }
+        });
     </script>
 </body>
 </html>

@@ -32,11 +32,25 @@ import sqlite3
 import requests
 from geopy.geocoders import Nominatim
 
+from functools import wraps
+
 app = Flask(__name__, static_folder='ui', static_url_path='')
 CORS(app)
 
 # Firebase config (same as dashcam_tracker)
 FIREBASE_DB_URL = "https://roadsentinel-87fc3-default-rtdb.asia-southeast1.firebasedatabase.app"
+
+# API Key Configuration (Simulating commercial LLM / Map API protection)
+ROADSENTINEL_API_KEY = "rs_api_key_8d9f10a7b4c2d3e4f5"
+
+def require_api_key(f):
+    @wraps(f)
+    def decorated(*args, **kwargs):
+        api_key = request.headers.get("x-api-key")
+        if not api_key or api_key != ROADSENTINEL_API_KEY:
+            return jsonify({"error": "Unauthorized. Missing or invalid API key."}), 401
+        return f(*args, **kwargs)
+    return decorated
 
 # Paths
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
@@ -193,6 +207,7 @@ def serve_detection(filename):
 # ─── API: YOLO Prediction (for live detection page) ──────────────────
 
 @app.route('/api/predict', methods=['POST'])
+@require_api_key
 def predict():
     """Accept an image, run YOLO inference, return predictions.
     If potholes are detected, saves the frame to detections/ folder."""
@@ -253,6 +268,35 @@ def predict():
             image_url = f"/detections/{filename}"
             predict.last_image_save = time.time()
             print(f"  📷 Saved: {filename}")
+
+            # Save to SQLite database
+            try:
+                lat = request.form.get('lat') or request.args.get('lat')
+                lng = request.form.get('lng') or request.args.get('lng')
+                loc = request.form.get('location') or request.args.get('location')
+
+                if not lat and gps_poller is not None:
+                    p_lat, p_lon, _ = gps_poller.get()
+                    if p_lat is not None:
+                        lat = p_lat
+                        lng = p_lon
+                        loc = reverse_geocode(p_lat, p_lon)
+
+                lat_val = float(lat) if lat else 30.9628
+                lng_val = float(lng) if lng else 76.8425
+                loc_val = loc if loc else "Baddi Corridor (Simulated GPS)"
+                max_conf = max(p["confidence"] for p in predictions) if predictions else 0.5
+
+                conn = sqlite3.connect(DB_PATH)
+                conn.execute(
+                    "INSERT INTO potholes (timestamp, latitude, longitude, location_text, confidence, image_path) VALUES (?, ?, ?, ?, ?, ?)",
+                    (datetime.now().isoformat(), lat_val, lng_val, loc_val, max_conf, image_url)
+                )
+                conn.commit()
+                conn.close()
+                print(f"  💾 Saved to SQLite: {loc_val} | Conf: {max_conf:.2f}")
+            except Exception as db_err:
+                print(f"  SQLite write error: {db_err}")
         except Exception as e:
             print(f"  Image save error: {e}")
 
@@ -343,6 +387,7 @@ def get_gps():
 # ─── API: Get potholes from SQLite ────────────────────────────────────
 
 @app.route('/api/potholes', methods=['GET'])
+@require_api_key
 def get_potholes():
     """Return all potholes from the local SQLite database."""
     if not os.path.exists(DB_PATH):
