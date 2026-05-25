@@ -215,6 +215,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (!startBtn) return;
 
+    // Helper to align overlay canvas perfectly with centered camera stream
+    function alignOverlayCanvas() {
+        if (cameraStream && cameraStream.style.display !== 'none' && cameraStream.clientWidth > 0) {
+            detectionOverlay.style.left = cameraStream.offsetLeft + 'px';
+            detectionOverlay.style.top = cameraStream.offsetTop + 'px';
+            detectionOverlay.style.width = cameraStream.clientWidth + 'px';
+            detectionOverlay.style.height = cameraStream.clientHeight + 'px';
+        }
+    }
+
+    // Align canvas on window resize
+    window.addEventListener('resize', alignOverlayCanvas);
+
     // Set default model URL to local Flask server
     if (!localStorage.getItem('savedModelUrl')) {
         modelApiInput.value = 'http://localhost:5000/api/predict';
@@ -264,6 +277,7 @@ document.addEventListener('DOMContentLoaded', () => {
             statusBadge.className = 'status-badge online';
             detectionOverlay.width = cameraStream.clientWidth;
             detectionOverlay.height = cameraStream.clientHeight;
+            alignOverlayCanvas();
             
             if (!isDetecting) {
                 isDetecting = true;
@@ -282,6 +296,7 @@ document.addEventListener('DOMContentLoaded', () => {
             if (!isDetecting && cameraStream.src) {
                 statusBadge.textContent = 'Online (Forced)';
                 statusBadge.className = 'status-badge online';
+                alignOverlayCanvas();
                 isDetecting = true;
                 startInferenceLoop(modelUrl);
             }
@@ -369,6 +384,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function drawPredictions(predictions, inferenceScale = 1) {
         if (!Array.isArray(predictions)) return;
+        alignOverlayCanvas();
         const ctx = detectionOverlay.getContext('2d');
         detectionOverlay.width = cameraStream.clientWidth;
         detectionOverlay.height = cameraStream.clientHeight;
