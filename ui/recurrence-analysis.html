@@ -170,7 +170,7 @@
     <script src="js/firebase.js"></script>
     <script src="js/data-loader.js"></script>
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
-    <script src="script.js"></script>
+    <script src="js/ui.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             if (!document.getElementById('recurrence-map')) return;
@@ -188,11 +188,17 @@
                 attribution: 'Tiles &copy; Esri &mdash; Source: Esri, USDA, USGS'
             });
 
-            // Initialize Leaflet map, defaulting to bright streetMap
+            // Retrieve active layer name from localStorage
+            const savedLayerName = localStorage.getItem('map_layer') || 'Street Map';
+            let defaultLayer = streetMap;
+            if (savedLayerName === 'Dark Mode') defaultLayer = darkMatter;
+            else if (savedLayerName === 'Satellite') defaultLayer = satellite;
+
+            // Initialize Leaflet map
             const recMap = L.map('recurrence-map', {
                 center: [30.9628, 76.8425],
                 zoom: 13.5,
-                layers: [streetMap]
+                layers: [defaultLayer]
             });
 
             // Add layer selector controls
@@ -203,6 +209,11 @@
             };
             L.control.layers(baseMaps, null, { collapsed: false, position: 'bottomleft' }).addTo(recMap);
 
+            // Save layer choice when changed
+            recMap.on('baselayerchange', (e) => {
+                localStorage.setItem('map_layer', e.name);
+            });
+
             const markerLayerGroup = L.layerGroup().addTo(recMap);
             let cachedPotholes = [];
 
@@ -212,16 +223,7 @@
                 filterAndRenderTable(cachedPotholes);
             });
 
-            // ─── Haversine Distance (meters) between two GPS points ──────────────
-            function haversineDistance(lat1, lng1, lat2, lng2) {
-                const R = 6371000; // Earth radius in meters
-                const toRad = deg => deg * Math.PI / 180;
-                const dLat = toRad(lat2 - lat1);
-                const dLng = toRad(lng2 - lng1);
-                const a = Math.sin(dLat / 2) ** 2 +
-                          Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) * Math.sin(dLng / 2) ** 2;
-                return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
-            }
+
 
             // Group raw potholes into unified "Recurrence Zones" within 30 meters on the fly
             function groupPotholesIntoZones(rawPotholes) {

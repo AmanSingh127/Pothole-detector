@@ -1,4 +1,5 @@
 let allPotholes = [];
+let recentlyDetectedPotholes = [];
 
 document.addEventListener('DOMContentLoaded', () => {
     const reportsList = document.getElementById('reports-list');
@@ -78,21 +79,55 @@ function renderReports(potholes) {
         new Date(b.timestamp) - new Date(a.timestamp)
     );
 
-    container.innerHTML = sorted.map(p => `
-        <div class="report-item" data-severity="${p.severity}" id="report-${p.id}">
-            <div class="report-header">
-                <div>
-                    <span class="severity-badge ${p.severity}">${p.severity}</span>
-                    <span class="report-timestamp">${new Date(p.timestamp).toLocaleTimeString()}</span>
+    container.innerHTML = sorted.map(p => {
+        const countBadge = p.frequency > 1 
+            ? `<span class="recurrence-badge" style="background: rgba(230, 126, 34, 0.12); color: #e67e22; border: 1px solid rgba(230, 126, 34, 0.25); padding: 0.2rem 0.5rem; border-radius: 4px; font-weight: 600; font-size: 0.75rem; letter-spacing: 0.2px; margin-left: 8px;">🔁 ${p.frequency}x</span>` 
+            : '';
+            
+        // Readonly status badge
+        const statusVal = p.status || 'Pending';
+        const statusClass = statusVal.toLowerCase().replace(' ', '-');
+        const statusBadgeStyle = `
+            display: inline-block;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            padding: 0.15rem 0.4rem;
+            border-radius: 4px;
+            margin-left: 8px;
+        `;
+        let statusBadgeBg = 'rgba(231, 76, 60, 0.15)';
+        let statusBadgeColor = '#c0392b';
+        if (statusClass === 'scheduled') {
+            statusBadgeBg = 'rgba(52, 152, 219, 0.15)';
+            statusBadgeColor = '#2980b9';
+        } else if (statusClass === 'in-progress') {
+            statusBadgeBg = 'rgba(46, 204, 113, 0.15)';
+            statusBadgeColor = '#27ae60';
+        } else if (statusClass === 'fixed') {
+            statusBadgeBg = 'rgba(39, 174, 96, 0.15)';
+            statusBadgeColor = '#27ae60';
+        }
+        const statusBadge = `<span class="status-badge ${statusClass}" style="${statusBadgeStyle} background-color: ${statusBadgeBg}; color: ${statusBadgeColor};">${statusVal}</span>`;
+
+        return `
+            <div class="report-item" data-severity="${p.severity}" id="report-${p.id}">
+                <div class="report-header">
+                    <div>
+                        <span class="severity-badge ${p.severity}">${p.severity}</span>
+                        ${statusBadge}
+                        <span class="report-timestamp">${new Date(p.timestamp).toLocaleTimeString()}</span>
+                        ${countBadge}
+                    </div>
+                    <button class="delete-single-btn" onclick="deleteReport('${p.id}')" title="Delete Report">🗑️</button>
                 </div>
-                <button class="delete-single-btn" onclick="deleteReport('${p.id}')" title="Delete Report">🗑️</button>
+                ${p.image_url ? `<img src="${p.image_url}" class="report-image clickable-image" alt="Pothole Snapshot" onclick="openImageModal('${p.image_url}')">` : ''}
+                <div class="report-location">${p.location || 'Unnamed Location'}</div>
+                <div class="report-coords">📍 ${p.lat.toFixed(4)}, ${p.lng.toFixed(4)}</div>
+                ${p.confidence ? `<div class="report-confidence">Confidence: ${Math.round(p.confidence * 100)}%</div>` : ''}
             </div>
-            ${p.image_url ? `<img src="${p.image_url}" class="report-image clickable-image" alt="Pothole Snapshot" onclick="openImageModal('${p.image_url}')">` : ''}
-            <div class="report-location">${p.location || 'Unnamed Location'}</div>
-            <div class="report-coords">📍 ${p.lat.toFixed(4)}, ${p.lng.toFixed(4)}</div>
-            ${p.confidence ? `<div class="report-confidence">Confidence: ${Math.round(p.confidence * 100)}%</div>` : ''}
-        </div>
-    `).join('');
+        `;
+    }).join('');
 }
 
 function setupFilters() {
@@ -114,19 +149,7 @@ function setupFilters() {
     });
 }
 
-// Delete single report
-window.deleteReport = async function(id) {
-    if (confirm("Are you sure you want to delete this specific report?")) {
-        try {
-            if (typeof firebase !== 'undefined') {
-                await firebase.database().ref('potholes').child(id).remove();
-            }
-        } catch (e) {
-            console.error("Error deleting report: ", e);
-            alert("Failed to delete report.");
-        }
-    }
-}
+
 
 // ─── GPS Poller — Gets real GPS from server (ADB via USB) ────────────
 
@@ -436,6 +459,28 @@ document.addEventListener('DOMContentLoaded', () => {
         // Push to Firebase max once every 2 seconds
         const now = Date.now();
         if (now - lastFirebasePush < 2000) return;
+
+        // Proximity/session lock to prevent lag-induced duplicates
+        const lat = currentGPS.lat || 30.9628;
+        const lng = currentGPS.lng || 76.8425;
+
+        let duplicate = false;
+        for (const prev of recentlyDetectedPotholes) {
+            if (now - prev.time < 10000) { // 10s window
+                const dist = haversineDistance(lat, lng, prev.lat, prev.lng);
+                if (dist <= 20) { // 20m proximity
+                    duplicate = true;
+                    break;
+                }
+            }
+        }
+        if (duplicate) {
+            console.log("Skipping duplicate real-time push (session lock)");
+            return;
+        }
+
+        recentlyDetectedPotholes.push({ lat, lng, time: now });
+        recentlyDetectedPotholes = recentlyDetectedPotholes.filter(prev => now - prev.time < 10000);
 
         // Find worst severity
         let worstSeverity = null;

@@ -121,6 +121,20 @@
     color: #27ae60;
 }
 
+.status.fixed {
+    background-color: rgba(39, 174, 96, 0.15);
+    color: #27ae60;
+}
+
+#clear-fixed-btn:hover {
+    background-color: #219653 !important;
+    transform: translateY(-1px);
+}
+
+#clear-fixed-btn:active {
+    transform: translateY(0);
+}
+
 .legend-section {
     margin-top: 2rem;
 }
