@@ -97,16 +97,34 @@ class ADBGPSPoller:
         print("  ADB GPS poller started (USB)")
 
     def _poll_loop(self):
+        # Give the server a moment to fully start before first poll
+        time.sleep(2)
+        consecutive_errors = 0
         while self.running:
             try:
                 result = subprocess.run(
                     ['adb', 'shell', 'dumpsys', 'location'],
-                    capture_output=True, text=True, timeout=5
+                    capture_output=True, text=True, timeout=8
                 )
-                if result.returncode == 0:
+                if result.returncode == 0 and result.stdout.strip():
                     self._parse_location(result.stdout)
-            except Exception:
-                pass
+                    consecutive_errors = 0
+                elif 'connection reset' in (result.stderr or '') or 'protocol fault' in (result.stderr or ''):
+                    consecutive_errors += 1
+                    if consecutive_errors >= 3:
+                        # Restart ADB server to clear stuck state
+                        subprocess.run(['adb', 'kill-server'], capture_output=True, timeout=5)
+                        time.sleep(1)
+                        subprocess.run(['adb', 'start-server'], capture_output=True, timeout=10)
+                        time.sleep(2)
+                        consecutive_errors = 0
+                        print("  ADB GPS poller: restarted ADB server")
+            except subprocess.TimeoutExpired:
+                consecutive_errors += 1
+                print("  ADB GPS poll timeout — retrying")
+            except Exception as e:
+                consecutive_errors += 1
+                print(f"  ADB GPS poll error: {e}")
             time.sleep(self.poll_interval)
 
     def _parse_location(self, output):
@@ -132,7 +150,8 @@ class ADBGPSPoller:
 
     def get(self):
         with self.lock:
-            if self.lat is not None and (time.time() - self.timestamp) < 120:
+            # Accept GPS data up to 30 days old — ADB cache is fine for location tagging
+            if self.lat is not None and (time.time() - self.timestamp) < 2592000:
                 return self.lat, self.lon, self.accuracy
         return None, None, None
 
@@ -270,7 +289,7 @@ def predict():
             predict.last_image_save = time.time()
             print(f"  📷 Saved: {filename}")
 
-            # Save to SQLite database
+            # Save to SQLite database + Firebase Realtime Database
             try:
                 lat = request.form.get('lat') or request.args.get('lat')
                 lng = request.form.get('lng') or request.args.get('lng')
@@ -288,6 +307,11 @@ def predict():
                 loc_val = loc if loc else "Baddi Corridor (Simulated GPS)"
                 max_conf = max(p["confidence"] for p in predictions) if predictions else 0.5
 
+                # Determine worst severity
+                sev_rank = {"severe": 3, "moderate": 2, "minor": 1}
+                worst_sev = max(predictions, key=lambda p: sev_rank.get(p["severity"], 0))["severity"] if predictions else "minor"
+
+                # 1. Save to SQLite
                 conn = sqlite3.connect(DB_PATH)
                 conn.execute(
                     "INSERT INTO potholes (timestamp, latitude, longitude, location_text, confidence, image_path) VALUES (?, ?, ?, ?, ?, ?)",
@@ -296,6 +320,35 @@ def predict():
                 conn.commit()
                 conn.close()
                 print(f"  💾 Saved to SQLite: {loc_val} | Conf: {max_conf:.2f}")
+
+                # 2. Sync to Firebase Realtime Database
+                try:
+                    firebase_payload = {
+                        "lat": lat_val,
+                        "lng": lng_val,
+                        "location": loc_val,
+                        "confidence": round(max_conf, 2),
+                        "severity": worst_sev,
+                        "timestamp": int(time.time() * 1000),  # ms epoch for JS compatibility
+                        "source": "server_adb",
+                        "status": "Pending"
+                    }
+                    if image_url:
+                        firebase_payload["image_url"] = request.host_url.rstrip('/') + image_url
+                        firebase_payload["image_path"] = image_url
+
+                    fb_resp = requests.post(
+                        f"{FIREBASE_DB_URL}/potholes.json",
+                        json=firebase_payload,
+                        timeout=5
+                    )
+                    if fb_resp.status_code in (200, 201):
+                        print(f"  🔥 Synced to Firebase: {loc_val}")
+                    else:
+                        print(f"  Firebase sync failed: {fb_resp.status_code} {fb_resp.text[:100]}")
+                except Exception as fb_err:
+                    print(f"  Firebase sync error: {fb_err}")
+
             except Exception as db_err:
                 print(f"  SQLite write error: {db_err}")
         except Exception as e:
